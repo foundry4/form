@@ -46,10 +46,6 @@ var resources = [
 
 const { Client } = require('pg');
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
 
 
 // landing page
@@ -68,7 +64,11 @@ router.get("/submit", function (req, res, next) {
     var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
     console.log(SQL);
  
-   
+    const client = new Client({
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
+      });
+      
     client.connect();
 
     client.query(SQL, (err, res) => {

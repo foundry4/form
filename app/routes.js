@@ -65,7 +65,7 @@ router.get("/submit", function (req, res, next) {
     console.log("submit");
     var json = JSON.stringify(req.session.data);
 
-    var SQL = 'INSERT INTO companies(info) VALUES ('+json+');';
+    var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
     console.log(SQL);
  
    

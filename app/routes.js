@@ -38,10 +38,10 @@ var expertise = [
 ];
 
 var resources = [
-    "suitable space",
-    "equipment",
-    "trained personnel",
-    "other",
+    "Suitable space",
+    "Equipment",
+    "Trained personnel",
+    "Other",
 ];
 
 

@@ -61,25 +61,7 @@ router.get("/submit", function (req, res, next) {
     console.log("submit");
     var json = JSON.stringify(req.session.data);
 
-    var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
-    console.log(SQL);
- 
-    const client = new Client({
-        connectionString: process.env.DATABASE_URL,
-        ssl: true,
-      });
-      
-    client.connect();
 
-    client.query(SQL, (err, res) => {
-        if (err) throw err;
-        console.log(res);
-        
-        /* for (let row of res.rows) {
-          console.log(JSON.stringify(row));
-        } */
-        client.end();
-      });
 
     res.render("confirm", {
       });

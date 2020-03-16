@@ -1,0 +1,118 @@
+
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="is-clinical-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                <h1 class="govuk-heading-l">
+                    Capabilities
+                </h1>
+              </legend>
+
+              <span id="is-clinical-hint" class="govuk-hint">
+            </span>
+
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="offer">
+                 6. Please give detail of what is being offered including relevant experience and background to help us understand its suitability to the challenge?   
+                </label>
+                <span id="offer-hint" class="govuk-hint">
+                  <!-- Do not include personal or financial information, like your National Insurance number or credit card details. -->
+                </span>
+                <textarea class="govuk-textarea" id="offer" name="offer" rows="5" aria-describedby="offer-hint">{{data['offer']}}</textarea>
+            </div>
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="experience-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h1 class="govuk-fieldset__heading">
+                          
+                        </h1>
+                    </legend>
+                    <span id="experience-hint" class="govuk-hint">
+                        7. In what areas do you have relevant skills and experience? 
+                    </span>
+                    <div class="govuk-checkboxes">
+                        {% for item in expertise %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="experience-{{ loop.index }}"
+                                name="experience" type="checkbox" value="{{ item }}">
+                            <label class="govuk-label govuk-checkboxes__label"
+                                for="experience-{{ loop.index }}">
+                                {{ item }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="expertise-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h1 class="govuk-fieldset__heading">
+                          
+                        </h1>
+                    </legend>
+                    <span id="expertise-hint" class="govuk-hint">
+                        8. What is the principal area of expertise being offered? 
+                    </span>
+                    <div class="govuk-checkboxes">
+                        {% for item in expertise %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="expertise-{{ loop.index }}"
+                                name="expertise" type="checkbox" value="{{ item }}">
+                            <label class="govuk-label govuk-checkboxes__label"
+                                for="expertise-{{ loop.index }}">
+                                {{ item }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
+
+
+            
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" aria-describedby="resources-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h1 class="govuk-fieldset__heading">
+                          
+                        </h1>
+                    </legend>
+                    <span id="resources-hint" class="govuk-hint">
+                        9. What is the resource being offered? 
+                    </span>
+                    <div class="govuk-checkboxes">
+                        {% for item in resources %}
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="resources-{{ loop.index }}"
+                                name="resources" type="checkbox" value="{{ item }}">
+                            <label class="govuk-label govuk-checkboxes__label"
+                                for="resources-{{ loop.index }}">
+                                {{ item }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="resources-detail">
+                            If yes to any of the above, please describe:
+                        </label>
+                        <span id="resources-detail-hint" class="govuk-hint">
+                          <!-- Do not include personal or financial information, like your National Insurance number or credit card details. -->
+                        </span>
+                        <textarea class="govuk-textarea" id="resources-detail" name="resources-detail" rows="5" aria-describedby="resources-detail-hint">{{data['resources-detail']}}</textarea>
+                      </div>
+                </fieldset>
+            </div>
+
+
+
+
+
+
+
+
+            </fieldset>
+          </div>

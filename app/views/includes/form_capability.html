@@ -3,7 +3,7 @@
             <fieldset class="govuk-fieldset" aria-describedby="is-clinical-hint">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
                 <h1 class="govuk-heading-l">
-                    Capabilities
+                    Business capabilities
                 </h1>
               </legend>
 
@@ -22,30 +22,64 @@
 
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset" aria-describedby="experience-hint">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                        <h1 class="govuk-fieldset__heading">
-                          
-                        </h1>
-                    </legend>
-                    <span id="experience-hint" class="govuk-hint">
-                        7. Please indicate in which of the following activities your organisation has relevant skills and experience, and where these activities take place.  
+
+                    <span id="expertise-hint" class="govuk-hint">
+                        7. Please indicate in which of the following activities your organisation has relevant skills and experience, and where these activities take place. 
                     </span>
-                    <div class="govuk-checkboxes">
-                        {% for item in expertise %}
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="experience-{{ loop.index }}"
-                                name="experience" type="checkbox" value="{{ item }}">
-                            <label class="govuk-label govuk-checkboxes__label"
-                                for="experience-{{ loop.index }}">
-                                {{ item }}
-                            </label>
-                        </div>
-                        {% endfor %}
-                    </div>
+                      <table class="govuk-table">
+                        <caption class="govuk-table__caption"></caption>
+                        <thead class="govuk-table__head">
+                          <tr class="govuk-table__row">
+                            <th scope="col" class="govuk-table__header">Category</th>
+                            <th scope="col" class="govuk-table__header">Have relevant skills</th>
+                            <th scope="col" class="govuk-table__header">Expertise offered</th>
+                            <th scope="col" class="govuk-table__header">Location</th>
+                          </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                          {% for item in expertise %}
+                          <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">{{ item }}</th>
+        
+                             <td class="govuk-table__cell">
+                              <div class="govuk-checkboxes__item">
+                              <input class="govuk-checkboxes__input" id="skills-{{ loop.index }}"
+                                  name="skills" type="checkbox" value="{{ item }}">
+                              <label class="govuk-label govuk-checkboxes__label"
+                                  for="skills-{{ loop.index }}">
+                                  &nbsp;
+                              </label>
+                            </div>
+                          </td>
+
+                            <td class="govuk-table__cell">
+                              <div class="govuk-checkboxes__item">
+                              <input class="govuk-checkboxes__input" id="expertise-{{ loop.index }}"
+                                  name="expertise" type="checkbox" value="{{ item }}">
+                              <label class="govuk-label govuk-checkboxes__label"
+                                  for="expertise-{{ loop.index }}">
+                                  &nbsp;
+                              </label>
+                            </div>
+                          </td>
+                            <td class="govuk-table__cell">
+                              <select class="govuk-select" name="expertise-location-{{ loop.index }}">
+                                <option value="" selected></option>
+                                <option value="1">in the UK</option>
+                                <option value="2">in Europe</option>
+                                <option value="3">in rest of world</option>
+                              </select>
+                          </td>
+        
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+
                 </fieldset>
             </div>
 
-
+<!-- 
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset" aria-describedby="expertise-hint">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
@@ -70,7 +104,7 @@
                     </div>
                 </fieldset>
             </div>
-
+ -->
 
             
             <div class="govuk-form-group">
@@ -81,7 +115,7 @@
                         </h1>
                     </legend>
                     <span id="resources-hint" class="govuk-hint">
-                        9. Please indicate which enabling resources are you able to provide in service of this initiative.  
+                        8. Please indicate which enabling resources are you able to provide in service of this initiative.  
                     </span>
                     <div class="govuk-checkboxes">
                         {% for item in resources %}

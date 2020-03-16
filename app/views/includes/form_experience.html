@@ -1,0 +1,97 @@
+
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="is-clinical-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                <h1 class="govuk-heading-l">
+                    Ventilator supply chain experience
+                </h1>
+              </legend>
+
+              <span id="is-clinical-hint" class="govuk-hint">
+                Do you already produce regulated ventilators that are used in a UK clinical setting
+                <i>i.e. Medicines and Healthcare Products Regulatory Agency (MHRA), approved with a CE mark?</i>
+              </span>
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="is-clinical" name="is-clinical" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="is-clinical">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="is-clinical-2" name="is-clinical" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="is-clinical-2">
+                    No
+                  </label>
+                </div>
+              </div>
+
+            <h1 class="govuk-heading-m">
+                Have you made parts or systems for ventilators:
+              </h1>
+
+              <span id="human-use-hint" class="govuk-hint">
+                For human use in clinical setting?
+              </span>
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="human-use" name="human-use" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="human-use">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="human-use-2" name="human-use" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="human-use-2">
+                    No
+                  </label>
+                </div>
+              </div>
+              <span id="vet-use-hint" class="govuk-hint">
+                For use in veterinary setting?	
+              </span>
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="vet-use" name="vet-use" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="vet-use">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="vet-use-2" name="vet-use" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="vet-use-2">
+                    No
+                  </label>
+                </div>
+              </div>
+              <span id="other-use-hint" class="govuk-hint">
+                For any other setting?
+              </span>
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="other-use" name="other-use" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="other-use">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="other-use-2" name="other-use" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="other-use-2">
+                    No
+                  </label>
+                </div>
+              </div>
+
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="ventilator-detail">
+                   If you answered yes to any of the above, please provide further details.
+                </label>
+                <span id="ventilator-detail-hint" class="govuk-hint">
+                  <!-- Do not include personal or financial information, like your National Insurance number or credit card details. -->
+                </span>
+                <textarea class="govuk-textarea" id="ventilator-detail" name="ventilator-detail" rows="5" aria-describedby="ventilator-detail-hint">{{data['ventilator-detail']}}</textarea>
+              </div>
+
+
+            </fieldset>
+          </div>

@@ -1,3 +1,4 @@
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% extends "layout.html" %}
 
 {% block pageTitle %}
@@ -10,6 +11,7 @@ Ventilator Challenge Questions
 {% endblock %}
 
 {% block beforeContent %}
+{{ super() }}
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
@@ -27,7 +29,7 @@ Ventilator Challenge Questions
 
 {% block content %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="">
 
       <h1 class="govuk-heading-xl">
         {% if serviceName %} {{ serviceName }} {% endif %}
@@ -42,27 +44,140 @@ Ventilator Challenge Questions
         <li>Speed</li>
       </ul>
 
+    </div>
+    <div>
+      <form id="" action="submit" method="post" class="form" >
+        
 
-      <a href="#" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"  data-module="govuk-button">
-        Start now
-        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
-          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
-        </svg>
-      </a>
-      
-      <!-- 
-      <h2 class="govuk-heading-m">Before you start</h2>
+        <div class="govuk-error-summary hide" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+          <h2 class="govuk-error-summary__title " id="error-summary-title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+            </ul>
+          </div>
+        </div>
 
-      <p>You can also <a href="#">register by post</a>.</p>
 
-      <p>The online service is also available in <a href="#">Welsh (Cymraeg)</a>.</p>
+      <div class="govuk-form-group"> 
+        <fieldset class="govuk-fieldset" aria-describedby="nationality-hint nationality-error">
 
-      <p>You can’t register for this service if you’re in the UK illegally.</p>
- -->
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              Basic details and permissions
+            </h1>
+          </legend>
+          <span id="nationality-hint" class="govuk-hint">
+            Add the name and contact details for your company.
+          </span>
+
+
+          <div class="">
+            <label class="govuk-label" for="organisation-name">
+              Organisation Name
+            </label>
+            <span id="address-name-error" class="govuk-error-message hide">
+              Enter the organisation name
+            </span>
+            <input class="govuk-input" id="organisation-name" name="organisation-name" type="text" value="{{basic['organisation-name']}}">
+          </div>
+
+          <div class="">
+            <label class="govuk-label" for="company-number">
+              Company number
+            </label>
+            <span id="company-number-error" class="govuk-error-message hide">
+              Enter the company number, is available
+            </span>
+            <input class="govuk-input" id="company-number" name="company-number" type="text" value="{{basic['company-number']}}">
+          </div>
+              
+          <div class="">      
+            <label class="govuk-label" for="primary-contact">
+              Primary Contact
+            </label>
+            <span id="primary-contact-error" class="govuk-error-message hide">
+              Enter the name of the Primary Contact
+            </span>
+            <input data-required="true" class="govuk-input" id="primary-contact" name="primary-contact" type="text" value="{{basic['primary-contact']}}">
+          </div>
+          
+          <div class="">
+            <label class="govuk-label" for="primary-contact-role">
+              Primary contact role
+            </label>
+            <span id="primary-contact-role-error" class="govuk-error-message hide">
+              Enter the person's role
+            </span>
+            <input data-required="true" class="govuk-input" id="primary-contact-role" name="primary-contact-role" type="text" value="{{basic['primary-contact-role']}}">
+          </div>
+
+          <div class="">
+            <label class="govuk-label" for="phone">
+              Phone number
+            </label>
+            <span id="phone-error" class="govuk-error-message hide">
+              Enter the contact phone number
+            </span>
+            <input data-required="true" class="govuk-input" id="phone" name="phone" type="text" value="{{basic['phone']}}">
+          </div>
+
+          <div class="">
+            <label class="govuk-label" for="email">
+              Email
+            </label>
+            <span id="email-error" class="govuk-error-message hide">
+              Enter the contact email
+            </span>
+            <input data-required="true" class="govuk-input" id="email" name="email" type="text" value="{{basic['email']}}">
+          </div>
+
+
+          <br/>
+
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="share-details-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                <h1 class="govuk-heading-m">
+                  Permission to pass details to BEIS and anyone the deem necessary
+                </h1>
+              </legend>
+              <span id="share-details-hint" class="govuk-hint">
+                
+              </span>
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="share-details" name="share-details" type="radio" value="yes">
+                  <label class="govuk-label govuk-radios__label" for="share-details">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="share-details-2" name="share-details" type="radio" value="no">
+                  <label class="govuk-label govuk-radios__label" for="share-details-2">
+                    No
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          {% include "includes/form_experience.html" %}
+
+          <br/>
+          {{ govukButton({
+            text: "Submit"
+          }) }}
+
+          </fieldset>
+        </div>
+
+      </form>
+
     </div>
 
-    <div class="govuk-grid-column-one-third">
-    </div>
+
 
   </div>
 {% endblock %}

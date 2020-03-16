@@ -63,12 +63,12 @@ router.get("/", function (req, res, next) {
 
 router.get("/submit", function (req, res, next) {
     console.log("submit");
-    var json = req.session.data;
+    var json = JSON.stringify(req.session.data);
 
-    console.log(json);
     var SQL = 'INSERT INTO companies(info) VALUES ('+json+');';
-    console.log(json);
-    
+    console.log(SQL);
+ 
+   
     client.connect();
 
     client.query(SQL, (err, res) => {
@@ -80,7 +80,6 @@ router.get("/submit", function (req, res, next) {
         } */
         client.end();
       });
-
 
     res.render("confirm", {
       });

@@ -48,6 +48,7 @@ var resources = [
 // landing page
 router.get("/", function (req, res, next) {
     res.render("index", {
+        categories: categories,
         expertise: expertise,
         resources: resources
       });

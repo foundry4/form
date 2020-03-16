@@ -29,10 +29,9 @@
             
             <span id="" class="govuk-hint">
               4. Have you made parts or systems for ventilators:
-                a) For human use in clinical setting?
               </span>
               <span id="human-use-hint" class="govuk-hint">
-                a) For human use in clinical setting?
+                 for human use in clinical setting?
               </span>
               <div class="govuk-radios govuk-radios--inline">
                 <div class="govuk-radios__item">
@@ -49,7 +48,7 @@
                 </div>
               </div>
               <span id="vet-use-hint" class="govuk-hint">
-                b) For use in veterinary setting?	
+                for use in veterinary setting?	
               </span>
               <div class="govuk-radios govuk-radios--inline">
                 <div class="govuk-radios__item">
@@ -66,7 +65,7 @@
                 </div>
               </div>
               <span id="other-use-hint" class="govuk-hint">
-                c) For any other setting?
+                use in any other setting?
               </span>
               <div class="govuk-radios govuk-radios--inline">
                 <div class="govuk-radios__item">
@@ -85,7 +84,7 @@
 
               <div class="govuk-form-group">
                 <label class="govuk-label" for="ventilator-detail">
-                 d)  If you answered yes to any of the above, please provide further details.
+                  If you answered yes to any of the above, please provide further details.
                 </label>
                 <span id="ventilator-detail-hint" class="govuk-hint">
                 </span>
@@ -93,7 +92,7 @@
               </div>
 
               <span id="expertise-hint" class="govuk-hint">
-                5. For each of the below medical devices, or component parts that could be used in a ventilator, do you design, manufacture and/or supply: 
+                5. Please indicate whether you design, manufacture or supply any of the following medical devices or component parts and, if so, where.
             </span>
               <table class="govuk-table">
                 <caption class="govuk-table__caption"></caption>
@@ -103,11 +102,11 @@
                     <th scope="col" class="govuk-table__header">Design</th>
                     <th scope="col" class="govuk-table__header">Manufacture</th>
                     <th scope="col" class="govuk-table__header">Supply</th>
-                    <th scope="col" class="govuk-table__header">Notes</th>
+                    <th scope="col" class="govuk-table__header">Location</th>
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
-                  {% for item in expertise %}
+                  {% for item in categories %}
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">{{ item }}</th>
 
@@ -140,6 +139,14 @@
                           &nbsp;
                       </label>
                     </div>
+                  </td>
+                    <td class="govuk-table__cell">
+                      <select class="govuk-select" name="location-{{ loop.index }}">
+                        <option value="" selected></option>
+                        <option value="1">in the UK</option>
+                        <option value="2">in Europe</option>
+                        <option value="3">in rest of world</option>
+                      </select>
                   </td>
 
                   </tr>

@@ -88,11 +88,41 @@
                  d)  If you answered yes to any of the above, please provide further details.
                 </label>
                 <span id="ventilator-detail-hint" class="govuk-hint">
-                  <!-- Do not include personal or financial information, like your National Insurance number or credit card details. -->
                 </span>
                 <textarea class="govuk-textarea" id="ventilator-detail" name="ventilator-detail" rows="5" aria-describedby="ventilator-detail-hint">{{data['ventilator-detail']}}</textarea>
               </div>
 
+              <span id="expertise-hint" class="govuk-hint">
+                5. For each of the below medical devices, or component parts that could be used in a ventilator, do you design, manufacture and/or supply: 
+            </span>
+              <table class="govuk-table">
+                <caption class="govuk-table__caption"></caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Category</th>
+                    <th scope="col" class="govuk-table__header">Design</th>
+                    <th scope="col" class="govuk-table__header">Manufacture</th>
+                    <th scope="col" class="govuk-table__header">Supply</th>
+                    <th scope="col" class="govuk-table__header">Notes</th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for item in expertise %}
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">{{ item }}</th>
+                    <td class="govuk-table__cell">
+                      <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="expertise-{{ loop.index }}"
+                          name="expertise" type="checkbox" value="{{ item }}">
+                      <label class="govuk-label govuk-checkboxes__label"
+                          for="expertise-{{ loop.index }}">
+                          {{ item }}
+                      </label>
+                  </div></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
 
             </fieldset>
           </div>

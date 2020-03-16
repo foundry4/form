@@ -61,116 +61,22 @@ Ventilator Challenge Questions
 
 
       <div class="govuk-form-group"> 
-        <fieldset class="govuk-fieldset" aria-describedby="nationality-hint nationality-error">
+ 
 
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-fieldset__heading">
-              Basic details and permissions
-            </h1>
-          </legend>
-          <span id="nationality-hint" class="govuk-hint">
-            Add the name and contact details for your company.
-          </span>
+          {% include "includes/form_basic.html" %}
 
 
-          <div class="">
-            <label class="govuk-label" for="organisation-name">
-              Organisation Name
-            </label>
-            <span id="address-name-error" class="govuk-error-message hide">
-              Enter the organisation name
-            </span>
-            <input class="govuk-input" id="organisation-name" name="organisation-name" type="text" value="{{basic['organisation-name']}}">
-          </div>
-
-          <div class="">
-            <label class="govuk-label" for="company-number">
-              Company number
-            </label>
-            <span id="company-number-error" class="govuk-error-message hide">
-              Enter the company number, is available
-            </span>
-            <input class="govuk-input" id="company-number" name="company-number" type="text" value="{{basic['company-number']}}">
-          </div>
-              
-          <div class="">      
-            <label class="govuk-label" for="primary-contact">
-              Primary Contact
-            </label>
-            <span id="primary-contact-error" class="govuk-error-message hide">
-              Enter the name of the Primary Contact
-            </span>
-            <input data-required="true" class="govuk-input" id="primary-contact" name="primary-contact" type="text" value="{{basic['primary-contact']}}">
-          </div>
-          
-          <div class="">
-            <label class="govuk-label" for="primary-contact-role">
-              Primary contact role
-            </label>
-            <span id="primary-contact-role-error" class="govuk-error-message hide">
-              Enter the person's role
-            </span>
-            <input data-required="true" class="govuk-input" id="primary-contact-role" name="primary-contact-role" type="text" value="{{basic['primary-contact-role']}}">
-          </div>
-
-          <div class="">
-            <label class="govuk-label" for="phone">
-              Phone number
-            </label>
-            <span id="phone-error" class="govuk-error-message hide">
-              Enter the contact phone number
-            </span>
-            <input data-required="true" class="govuk-input" id="phone" name="phone" type="text" value="{{basic['phone']}}">
-          </div>
-
-          <div class="">
-            <label class="govuk-label" for="email">
-              Email
-            </label>
-            <span id="email-error" class="govuk-error-message hide">
-              Enter the contact email
-            </span>
-            <input data-required="true" class="govuk-input" id="email" name="email" type="text" value="{{basic['email']}}">
-          </div>
-
-
-          <br/>
-
-          <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset" aria-describedby="share-details-hint">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-                <h1 class="govuk-heading-m">
-                  Permission to pass details to BEIS and anyone the deem necessary
-                </h1>
-              </legend>
-              <span id="share-details-hint" class="govuk-hint">
-                
-              </span>
-              <div class="govuk-radios govuk-radios--inline">
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="share-details" name="share-details" type="radio" value="yes">
-                  <label class="govuk-label govuk-radios__label" for="share-details">
-                    Yes
-                  </label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="share-details-2" name="share-details" type="radio" value="no">
-                  <label class="govuk-label govuk-radios__label" for="share-details-2">
-                    No
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-          </div>
 
           {% include "includes/form_experience.html" %}
+
+          {% include "includes/form_speed.html" %}
 
           <br/>
           {{ govukButton({
             text: "Submit"
           }) }}
 
-          </fieldset>
+         
         </div>
 
       </form>

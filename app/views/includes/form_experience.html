@@ -110,15 +110,38 @@
                   {% for item in expertise %}
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">{{ item }}</th>
+
                     <td class="govuk-table__cell">
                       <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="expertise-{{ loop.index }}"
-                          name="expertise" type="checkbox" value="{{ item }}">
+                      <input class="govuk-checkboxes__input" id="design-{{ loop.index }}"
+                          name="design" type="checkbox" value="{{ item }}">
                       <label class="govuk-label govuk-checkboxes__label"
-                          for="expertise-{{ loop.index }}">
-                          {{ item }}
+                          for="design-{{ loop.index }}">
+                          &nbsp;
                       </label>
-                  </div></td>
+                    </div>
+                  </td>
+                    <td class="govuk-table__cell">
+                      <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="manufacture-{{ loop.index }}"
+                          name="manufacture" type="checkbox" value="{{ item }}">
+                      <label class="govuk-label govuk-checkboxes__label"
+                          for="manufacture-{{ loop.index }}">
+                          &nbsp;
+                      </label>
+                    </div>
+                  </td>
+                    <td class="govuk-table__cell">
+                      <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="supply-{{ loop.index }}"
+                          name="supply" type="checkbox" value="{{ item }}">
+                      <label class="govuk-label govuk-checkboxes__label"
+                          for="supply-{{ loop.index }}">
+                          &nbsp;
+                      </label>
+                    </div>
+                  </td>
+
                   </tr>
                   {% endfor %}
                 </tbody>

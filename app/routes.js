@@ -110,6 +110,7 @@ router.get("/submit", function (req, res, next) {
     var ventilatorText = "";
     if (data['ventilator-detail']) {
         ventilatorText = data['ventilator-detail'];
+        ventilatorText = ventilatorText.substring(0, 999);
     }
     //console.log(isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText);
 
@@ -182,6 +183,7 @@ router.get("/submit", function (req, res, next) {
     var offerText = [];
     if (data['offer']) {
         offerText = data['offer'];
+        offerText = offerText.substring(0, 999);
     }
 
     // SKILLS and SPECIALISM
@@ -240,6 +242,7 @@ router.get("/submit", function (req, res, next) {
     var resourcesText = [];
     if (data['resources-detail']) {
         resourcesText = data['resources-detail'];
+        resourcesText = resourcesText.substring(0, 999);
     }
     //console.log(resources, resourcesText);
 
@@ -301,17 +304,15 @@ router.get("/submit", function (req, res, next) {
         console.log(SQL);
         
         const client = new Client({
-            connectionString: process.env.DATABASE_URL,
+            connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
             ssl: true,
             });
             
         client.connect();
     
         client.query(SQL, (err, res) => {
-            if (err) throw err;
-            
-            //console.log(res);
             client.end();
+            if (err) next(err);
         });
         
     } else {

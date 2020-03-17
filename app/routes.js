@@ -297,14 +297,14 @@ router.get("/submit", function (req, res, next) {
 
  
     var SQL = `INSERT INTO companies(
-        company_name, company_number, contact_name, contact_role, contact_phone, contact_email, 
+        info, company_name, company_number, contact_name, contact_role, contact_phone, contact_email, 
         ventilator_production, ventilator_parts_human, ventilator_parts_veterinary, ventilator_parts_any, ventilator_parts_details,
         ${deviceFields}
         offer_organisation,
         ${catFields}
         resources_space, resources_equipment, resources_personnel, resources_other, resource_details
         ) VALUES (
-            '${companyName}', '${companyNumber}', '${contact}', '${role}', '${phone}', '${email}', 
+            '${json}','${companyName}', '${companyNumber}', '${contact}', '${role}', '${phone}', '${email}', 
             '${isClinical}', '${isHumanUse}', '${isVetUse}', '${isOtherUse}',' ${ventilatorText}',
             ${devicesResults}
             '${offerText}',

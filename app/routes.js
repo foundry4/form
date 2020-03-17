@@ -302,16 +302,14 @@ router.get("/submit", function (req, res, next) {
         ${deviceFields}
         offer_organisation,
         ${catFields}
-        resources_space, resources_equipment, resources_personnel, resources_other, resource_details,
-        created_at
+        resources_space, resources_equipment, resources_personnel, resources_other, resource_details
         ) VALUES (
             '${companyName}', '${companyNumber}', '${contact}', '${role}', '${phone}', '${email}', 
             '${isClinical}', '${isHumanUse}', '${isVetUse}', '${isOtherUse}',' ${ventilatorText}',
             ${devicesResults}
             '${offerText}',
             ${catResults}
-            '${resources_space}', '${resources_equipment}', '${resources_personnel}', '${resources_other}', '${resourcesText}',
-            '${time}'
+            '${resources_space}', '${resources_equipment}', '${resources_personnel}', '${resources_other}', '${resourcesText}'
         );`;
  
         /* 

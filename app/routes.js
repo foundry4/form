@@ -193,10 +193,10 @@ console.log(specialismLocation);
             '${skills}', '${specialism}', '${specialismLocation}', '${resources}', '${resourcesText}'
         );`;
  */
+
+
     var json = JSON.stringify(req.session.data);
     var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
-
-
     console.log(SQL);
  
     const client = new Client({
@@ -212,6 +212,7 @@ console.log(specialismLocation);
         //console.log(res);
         client.end();
       });
+
  
     res.render("confirm", {
       });

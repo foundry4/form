@@ -191,6 +191,8 @@ router.get("/submit", function (req, res, next) {
         for (var i = 0; i < len; i++) {
             //convert name to string
             var name = data['skills'][i].split("/")[0];
+            name = name.split("(").join("");
+            name = name.split(")").join("");
             name = name.split(" ").join("_") + "_skills";
             name = name.split("__").join("_").toLowerCase();
             //console.log(data['skills'][i], name);
@@ -203,6 +205,8 @@ router.get("/submit", function (req, res, next) {
         for (var i = 0; i < len; i++) {
             //convert name to string
             var name = data['specialism'][i].split("/")[0];
+            name = name.split("(").join("");
+            name = name.split(")").join("");
             name = name.split(" ").join("_") + "_specialism";
             name = name.split("__").join("_").toLowerCase();
             //console.log(data['specialism'][i], name);
@@ -214,6 +218,8 @@ router.get("/submit", function (req, res, next) {
         var ref = 0;
         if (data['specialism-location-' + i] !== "") {
             var name = expertise[i - 1].split("/")[0];
+            name = name.split("(").join("");
+            name = name.split(")").join("");
             name = name.split(" ").join("_") + "_location";
             name = name.split("__").join("_").toLowerCase();
             ref = parseInt(data['specialism-location-' + i]);
@@ -262,12 +268,12 @@ router.get("/submit", function (req, res, next) {
 
 
     var SQL = `INSERT INTO companies(
-        name, number, contact, phone, email, 
-        isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText,
+        company_name, company_number, contact_name, contact_role, contact_phone, contact_email, 
+        ventilator_production, ventilator_parts_human, ventilator_parts_veterinary, ventilator_parts_any, ventilator_parts_details,
         ${deviceFields}
-        offerText,
+        offer_organisation,
         ${catFields}
-        resources, resourcesText,
+        resources, resource_details,
         timestamp
         ) VALUES (
             '${companyName}', '${companyNumber}', '${contact}', '${phone}', '${email}', 
@@ -279,9 +285,14 @@ router.get("/submit", function (req, res, next) {
             '${time}'
         );`;
 
-
-
-
+        /* 
+        ventilator_production isClinical
+        ventilator_parts_human isHumanUse
+        ventilator_parts_veterinary isVetUse
+        ventilator_parts_any isOtherUse
+        ventilator_parts_details ventilatorText
+        */
+ 
     // check for data
     if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";

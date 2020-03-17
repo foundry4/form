@@ -62,13 +62,13 @@ router.get("/submit", function (req, res, next) {
     
     var data = req.session.data;
     // pullout specific BASIC vars
-    var name = "";
+    var companyName = "";
     if(data['organisation-name']){
-        name = data['organisation-name'];
+        companyName = data['organisation-name'];
     }
-    var number = "";
+    var companyNumber = "";
     if(data['company-number']){
-        number = data['company-number'];
+        companyNumber = data['company-number'];
     }
     var contact = "";
     if(data['primary-contact']){
@@ -87,9 +87,7 @@ router.get("/submit", function (req, res, next) {
         email = data['email'];
     }
 
-    //console.log(name, number ,contact, phone, email);
     // SUPPLY CHAIN
-
     var isClinical = "no";
     if(data['is-clinical']){
         isClinical = data['is-clinical'];
@@ -265,7 +263,7 @@ router.get("/submit", function (req, res, next) {
         ${catFields}
         resources, resourcesText
         ) VALUES (
-            '${name}', '${number}', '${contact}', '${phone}', '${email}', 
+            '${companyName}', '${companyNumber}', '${contact}', '${phone}', '${email}', 
             '${isClinical}', '${isHumanUse}', '${isVetUse}', '${isOtherUse}',' ${ventilatorText}',
             ${devicesResults}
             '${offerText}',

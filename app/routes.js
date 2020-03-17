@@ -61,6 +61,7 @@ router.get("/", function (req, res, next) {
 router.get("/submit", function (req, res, next) {
 
     var data = req.session.data;
+    /*
     // pullout specific BASIC vars
     var companyName = "";
     if (data['organisation-name']) {
@@ -263,10 +264,11 @@ router.get("/submit", function (req, res, next) {
     // time stamp
     var time = + new Date();
     // add to json
-    req.session.data.timestamp = time;
+    //req.session.data.timestamp = time;
+*/
     var json = JSON.stringify(req.session.data);
 
-
+/* 
     var SQL = `INSERT INTO companies(
         company_name, company_number, contact_name, contact_role, contact_phone, contact_email, 
         ventilator_production, ventilator_parts_human, ventilator_parts_veterinary, ventilator_parts_any, ventilator_parts_details,
@@ -284,7 +286,7 @@ router.get("/submit", function (req, res, next) {
             '${resources}', '${resourcesText}',
             '${time}'
         );`;
-
+ */
         /* 
         ventilator_production isClinical
         ventilator_parts_human isHumanUse
@@ -295,29 +297,29 @@ router.get("/submit", function (req, res, next) {
  
     // check for data
     if (json.length > 2) {
-        //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
+        var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
         console.log(SQL);
+        
+        const client = new Client({
+            connectionString: process.env.DATABASE_URL,
+            ssl: true,
+            });
+            
+        client.connect();
+    
+        client.query(SQL, (err, res) => {
+            if (err) throw err;
+            
+            //console.log(res);
+            client.end();
+        });
+        
     } else {
         console.log('nothing to see');
 
     }
     
-    // test
-    /* 
-    const client = new Client({
-        connectionString: process.env.DATABASE_URL,
-        ssl: true,
-        });
-        
-    client.connect();
 
-    client.query(SQL, (err, res) => {
-        if (err) throw err;
-        
-        //console.log(res);
-        client.end();
-    });
-    */
 
     res.render("confirm", {
     });

@@ -254,6 +254,12 @@ router.get("/submit", function (req, res, next) {
         catResults += "'" + cats[item] +"', ";
     }
 
+    // time stamp
+    var time = + new Date();
+    //add to json
+    req.session.data.timestamp = time;
+    var json = JSON.stringify(req.session.data);
+
 
     var SQL = `INSERT INTO companies(
         name, number, contact, phone, email, 
@@ -261,22 +267,19 @@ router.get("/submit", function (req, res, next) {
         ${deviceFields}
         offerText,
         ${catFields}
-        resources, resourcesText
+        resources, resourcesText,
+        timestamp
         ) VALUES (
             '${companyName}', '${companyNumber}', '${contact}', '${phone}', '${email}', 
             '${isClinical}', '${isHumanUse}', '${isVetUse}', '${isOtherUse}',' ${ventilatorText}',
             ${devicesResults}
             '${offerText}',
             ${catResults}
-            '${resources}', '${resourcesText}'
+            '${resources}', '${resourcesText}',
+            '${time}'
         );`;
  
 
-    // time stamp
-    var time = + new Date();
-    //add to json
-    req.session.data.timestamp = time;
-    var json = JSON.stringify(req.session.data);
 
 
     // check for data

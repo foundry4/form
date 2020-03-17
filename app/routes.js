@@ -55,123 +55,123 @@ router.get("/", function (req, res, next) {
         devices: devices,
         expertise: expertise,
         resources: resources
-      });
+    });
 });
 
 router.get("/submit", function (req, res, next) {
-    
+
     var data = req.session.data;
     // pullout specific BASIC vars
     var companyName = "";
-    if(data['organisation-name']){
+    if (data['organisation-name']) {
         companyName = data['organisation-name'];
     }
     var companyNumber = "";
-    if(data['company-number']){
+    if (data['company-number']) {
         companyNumber = data['company-number'];
     }
     var contact = "";
-    if(data['primary-contact']){
+    if (data['primary-contact']) {
         contact = data['primary-contact'];
     }
     var role = "";
-    if(data['primary-contact-role']){
+    if (data['primary-contact-role']) {
         role = data['primary-contact-role'];
     }
     var phone = "";
-    if(data['phone']){
+    if (data['phone']) {
         phone = data['phone'];
     }
     var email = "";
-    if(data['email']){
+    if (data['email']) {
         email = data['email'];
     }
 
     // SUPPLY CHAIN
     var isClinical = "no";
-    if(data['is-clinical']){
+    if (data['is-clinical']) {
         isClinical = data['is-clinical'];
     }
     var isHumanUse = "no";
-    if(data['human-use']){
+    if (data['human-use']) {
         isHumanUse = data['human-use'];
     }
     var isVetUse = "no";
-    if(data['vet-use']){
+    if (data['vet-use']) {
         isVetUse = data['vet-use'];
     }
     var isOtherUse = "no";
-    if(data['other-use']){
+    if (data['other-use']) {
         isOtherUse = data['other-use'];
     }
 
     // freetext
     var ventilatorText = "";
-    if(data['ventilator-detail']){
+    if (data['ventilator-detail']) {
         ventilatorText = data['ventilator-detail'];
     }
     //console.log(isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText);
 
     // MEDICAL DEVICES
-    var med_devices = { };
+    var med_devices = {};
     // loop thru design
-    if(data['design']){
+    if (data['design']) {
         let len = data['design'].length;
-        for ( var i=0; i<len; i++){
+        for (var i = 0; i < len; i++) {
             //convert name to string
             var name = data['design'][i].split(" /")[0];
             name = name.split("(")[0];
             name = name.split(",")[0];
             name = name.split(" and")[0];
             name = name.split("-").join("_");
-            name = name.split(" ").join("_")+"_design";
+            name = name.split(" ").join("_") + "_design";
             name = name.split("__").join("_").toLowerCase();
             med_devices[name] = "yes";
         }
     }
-    if(data['manufacture']){
+    if (data['manufacture']) {
         let len = data['manufacture'].length;
-        for ( var i=0; i<len; i++){
+        for (var i = 0; i < len; i++) {
             //convert name to string
             var name = data['manufacture'][i].split(" /")[0];
             name = name.split("(")[0];
             name = name.split(",")[0];
             name = name.split(" and")[0];
             name = name.split("-").join("_");
-            name = name.split(" ").join("_")+"_manufacture";
+            name = name.split(" ").join("_") + "_manufacture";
             name = name.split("__").join("_").toLowerCase();
             med_devices[name] = "yes";
         }
     }
-    if(data['supply']){
+    if (data['supply']) {
         let len = data['supply'].length;
-        for ( var i=0; i<len; i++){
+        for (var i = 0; i < len; i++) {
             //convert name to string
             var name = data['supply'][i].split(" /")[0];
             name = name.split("(")[0];
             name = name.split(",")[0];
             name = name.split(" and")[0];
             name = name.split("-").join("_");
-            name = name.split(" ").join("_")+"_supply";
+            name = name.split(" ").join("_") + "_supply";
             name = name.split("__").join("_").toLowerCase();
             med_devices[name] = "yes";
         }
     }
     // get locations
-    for ( var i=1; i<21; i++){
+    for (var i = 1; i < 21; i++) {
         var ref = 0;
-        if(data['location-'+i]!==""){
-            var name = devices[i-1].split("/")[0];
+        if (data['location-' + i] !== "") {
+            var name = devices[i - 1].split("/")[0];
             name = name.split("(")[0];
             name = name.split(",")[0];
             name = name.split(" and")[0];
             name = name.split("-").join("_");
-            name = name.split(" ").join("_")+"_location";
+            name = name.split(" ").join("_") + "_location";
             name = name.split("__").join("_").toLowerCase();
-            ref = parseInt(data['location-'+i]);
+            ref = parseInt(data['location-' + i]);
             med_devices[name] = ref;
         }
-        
+
     }
     //console.log(med_devices);
 
@@ -179,84 +179,84 @@ router.get("/submit", function (req, res, next) {
     // Q5
     // freetext
     var offerText = [];
-    if(data['offer']){
+    if (data['offer']) {
         offerText = data['offer'];
     }
 
     // SKILLS and SPECIALISM
-    var cats = { };
+    var cats = {};
     // loop thru skillz
-    if(data['skills']){
+    if (data['skills']) {
         let len = data['skills'].length;
-        for ( var i=0; i<len; i++){
+        for (var i = 0; i < len; i++) {
             //convert name to string
             var name = data['skills'][i].split("/")[0];
-            name = name.split(" ").join("_")+"_skills";
+            name = name.split(" ").join("_") + "_skills";
             name = name.split("__").join("_").toLowerCase();
-           //console.log(data['skills'][i], name);
+            //console.log(data['skills'][i], name);
             cats[name] = "yes";
         }
     }
     //var specialism = [];
-    if(data['specialism']){
+    if (data['specialism']) {
         let len = data['specialism'].length;
-        for ( var i=0; i<len; i++){
+        for (var i = 0; i < len; i++) {
             //convert name to string
             var name = data['specialism'][i].split("/")[0];
-            name = name.split(" ").join("_")+"_specialism";
+            name = name.split(" ").join("_") + "_specialism";
             name = name.split("__").join("_").toLowerCase();
             //console.log(data['specialism'][i], name);
             cats[name] = "yes";
         }
     }
     // get locations
-    for ( var i=1; i<11; i++){
+    for (var i = 1; i < 11; i++) {
         var ref = 0;
-        if(data['specialism-location-'+i]!==""){
-            var name = expertise[i-1].split("/")[0];
-            name = name.split(" ").join("_")+"_location";
+        if (data['specialism-location-' + i] !== "") {
+            var name = expertise[i - 1].split("/")[0];
+            name = name.split(" ").join("_") + "_location";
             name = name.split("__").join("_").toLowerCase();
-            ref = parseInt(data['specialism-location-'+i]);
+            ref = parseInt(data['specialism-location-' + i]);
             cats[name] = ref;
         }
-        
+
     }
     //console.log(cats);
 
 
     // Q7
     var resources = [];
-    if(data['resources']){
+    if (data['resources']) {
         resources = data['resources'];
     }
     // freetext
     var resourcesText = [];
-    if(data['resources-detail']){
+    if (data['resources-detail']) {
         resourcesText = data['resources-detail'];
     }
     //console.log(resources, resourcesText);
-    
+
     var deviceFields = "";
     var devicesResults = "";
-    for (item in med_devices){
-        deviceFields += item +", ";
+    for (item in med_devices) {
+        deviceFields += item + ", ";
     }
-    for (item in med_devices){
-        devicesResults += "'" + med_devices[item] +"', ";
+    for (item in med_devices) {
+        devicesResults += "'" + med_devices[item] + "', ";
     }
- 
+
     var catFields = "";
     var catResults = "";
-    for (item in cats){
-        catFields += item +", ";
+    for (item in cats) {
+        catFields += item + ", ";
     }
-    for (item in cats){
-        catResults += "'" + cats[item] +"', ";
+    for (item in cats) {
+        catResults += "'" + cats[item] + "', ";
     }
 
     // time stamp
     var time = + new Date();
-    //add to json
+    // add to json
     req.session.data.timestamp = time;
     var json = JSON.stringify(req.session.data);
 
@@ -278,26 +278,26 @@ router.get("/submit", function (req, res, next) {
             '${resources}', '${resourcesText}',
             '${time}'
         );`;
- 
+
 
 
 
     // check for data
-    if (json.length>2){
+    if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
         console.log(SQL);
-    }else{
+    } else {
         console.log('nothing to see');
-        
-    }
-/* 
 
- 
+    }
+    
+    
+    /* 
     const client = new Client({
         connectionString: process.env.DATABASE_URL,
         ssl: true,
-      });
-      
+        });
+        
     client.connect();
 
     client.query(SQL, (err, res) => {
@@ -305,11 +305,11 @@ router.get("/submit", function (req, res, next) {
         
         //console.log(res);
         client.end();
-      });
- */
- 
+    });
+    */
+
     res.render("confirm", {
-      });
+    });
 });
 
 

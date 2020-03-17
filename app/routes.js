@@ -178,7 +178,7 @@ console.log(specialismLocation);
         resourcesText = data['resources-detail'];
     }
     console.log(resources, resourcesText);
-    
+/*     
     var SQL = `INSERT INTO companies(
         name, number, contact, phone, email, 
         isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText,
@@ -192,13 +192,13 @@ console.log(specialismLocation);
             '${offerText}',
             '${skills}', '${specialism}', '${specialismLocation}', '${resources}', '${resourcesText}'
         );`;
-
-    //var json = JSON.stringify(req.session.data);
-    //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
+ */
+    var json = JSON.stringify(req.session.data);
+    var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
 
 
     console.log(SQL);
-/*  
+ 
     const client = new Client({
         connectionString: process.env.DATABASE_URL,
         ssl: true,
@@ -212,7 +212,7 @@ console.log(specialismLocation);
         //console.log(res);
         client.end();
       });
- */
+ 
     res.render("confirm", {
       });
 });

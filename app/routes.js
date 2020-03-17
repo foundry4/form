@@ -13,7 +13,7 @@ var devices = [
     "Pressure relief valves",
     "Check valves / one-way valves",
     "Industrial Automation components (Safety Relays, PLCs)",
-    "Power Supplies ",
+    "Power Supplies",
     "Electric Motors, and motor controllers",
     "Linear actuators and controllers",
     "Tubing and fittings",
@@ -115,20 +115,70 @@ router.get("/submit", function (req, res, next) {
     //console.log(isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText);
 
     // MEDICAL DEVICES
-    var design = [];
+    var med_devices = { };
+    // loop thru design
     if(data['design']){
-        design = data['design'];
+        let len = data['design'].length;
+        for ( var i=0; i<len; i++){
+            //convert name to string
+            var name = data['design'][i].split(" /")[0];
+            name = name.split("(")[0];
+            name = name.split(",")[0];
+            name = name.split(" and")[0];
+            name = name.split("-").join("_");
+            name = name.split(" ").join("_")+"_design";
+            name = name.split("__").join("_").toLowerCase();
+            med_devices[name] = "yes";
+        }
     }
-    var manufacture = [];
     if(data['manufacture']){
-        manufacture = data['manufacture'];
+        let len = data['manufacture'].length;
+        for ( var i=0; i<len; i++){
+            //convert name to string
+            var name = data['manufacture'][i].split(" /")[0];
+            name = name.split("(")[0];
+            name = name.split(",")[0];
+            name = name.split(" and")[0];
+            name = name.split("-").join("_");
+            name = name.split(" ").join("_")+"_manufacture";
+            name = name.split("__").join("_").toLowerCase();
+            med_devices[name] = "yes";
+        }
     }
-    var supply = [];
     if(data['supply']){
-        supply = data['supply'];
+        let len = data['supply'].length;
+        for ( var i=0; i<len; i++){
+            //convert name to string
+            var name = data['supply'][i].split(" /")[0];
+            name = name.split("(")[0];
+            name = name.split(",")[0];
+            name = name.split(" and")[0];
+            name = name.split("-").join("_");
+            name = name.split(" ").join("_")+"_supply";
+            name = name.split("__").join("_").toLowerCase();
+            med_devices[name] = "yes";
+        }
+    }
+    // get locations
+    for ( var i=1; i<21; i++){
+        var ref = 0;
+        if(data['location-'+i]!==""){
+            var name = devices[i-1].split("/")[0];
+            name = name.split("(")[0];
+            name = name.split(",")[0];
+            name = name.split(" and")[0];
+            name = name.split("-").join("_");
+            name = name.split(" ").join("_")+"_location";
+            name = name.split("__").join("_").toLowerCase();
+            ref = parseInt(data['location-'+i]);
+            med_devices[name] = ref;
+        }
+        
     }
 
+    console.log(med_devices);
     
+
     // get locations - build an array
     var location = [];
     for ( var i=1; i<21; i++){
@@ -158,7 +208,7 @@ router.get("/submit", function (req, res, next) {
             var name = data['skills'][i].split("/")[0];
             name = name.split(" ").join("_")+"_skills";
             name = name.split("__").join("_").toLowerCase();
-           // //console.log(data['skills'][i], name);
+           //console.log(data['skills'][i], name);
             cats[name] = "yes";
         }
     }
@@ -217,6 +267,7 @@ router.get("/submit", function (req, res, next) {
  */
 
 var json = JSON.stringify(req.session.data);
+// check for data
 if (json.length>2){
     
     var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
@@ -225,8 +276,8 @@ if (json.length>2){
     console.log('nothing to see');
     
 }
-
 /* 
+
  
     const client = new Client({
         connectionString: process.env.DATABASE_URL,

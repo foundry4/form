@@ -175,21 +175,8 @@ router.get("/submit", function (req, res, next) {
         }
         
     }
+    //console.log(med_devices);
 
-    console.log(med_devices);
-    
-
-    // get locations - build an array
-    var location = [];
-    for ( var i=1; i<21; i++){
-        var ref = 0;
-        if(data['location-'+i]!==""){
-            ref = parseInt(data['location-'+i]);
-        }
-        location.push(ref);
-    }
-    //console.log(design, manufacture, supply);
-    //console.log(location);
 
     // Q5
     // freetext
@@ -250,32 +237,58 @@ router.get("/submit", function (req, res, next) {
         resourcesText = data['resources-detail'];
     }
     //console.log(resources, resourcesText);
-/*     
+    
+    var deviceFields = "";
+    var devicesResults = "";
+    for (item in med_devices){
+        deviceFields += item +", ";
+    }
+    for (item in med_devices){
+        devicesResults += "'" + med_devices[item] +"', ";
+    }
+ 
+    var catFields = "";
+    var catResults = "";
+    for (item in cats){
+        catFields += item +", ";
+    }
+    for (item in cats){
+        catResults += "'" + cats[item] +"', ";
+    }
+
+
     var SQL = `INSERT INTO companies(
         name, number, contact, phone, email, 
         isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText,
-        design, manufacture, supply, location,
+        ${deviceFields}
         offerText,
-        skills, specialism, specialismLocation, resources, resourcesText
+        ${catFields}
+        resources, resourcesText
         ) VALUES (
             '${name}', '${number}', '${contact}', '${phone}', '${email}', 
             '${isClinical}', '${isHumanUse}', '${isVetUse}', '${isOtherUse}',' ${ventilatorText}',
-            '${design}', '${manufacture}', '${supply}',' ${location}',
+            ${devicesResults}
             '${offerText}',
-            '${skills}', '${specialism}', '${specialismLocation}', '${resources}', '${resourcesText}'
+            ${catResults}
+            '${resources}', '${resourcesText}'
         );`;
- */
+ 
 
-var json = JSON.stringify(req.session.data);
-// check for data
-if (json.length>2){
-    
-    var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
-    console.log(SQL);
-}else{
-    console.log('nothing to see');
-    
-}
+    // time stamp
+    var time = + new Date();
+    //add to json
+    req.session.data.timestamp = time;
+    var json = JSON.stringify(req.session.data);
+
+
+    // check for data
+    if (json.length>2){
+        //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
+        console.log(SQL);
+    }else{
+        console.log('nothing to see');
+        
+    }
 /* 
 
  

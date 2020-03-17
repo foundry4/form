@@ -61,7 +61,7 @@ router.get("/", function (req, res, next) {
 router.get("/submit", function (req, res, next) {
 
     var data = req.session.data;
-    /*
+    
     // pullout specific BASIC vars
     var companyName = "";
     if (data['organisation-name']) {
@@ -198,7 +198,6 @@ router.get("/submit", function (req, res, next) {
             name = name.split(")").join("");
             name = name.split(" ").join("_") + "_skills";
             name = name.split("__").join("_").toLowerCase();
-            //console.log(data['skills'][i], name);
             cats[name] = "yes";
         }
     }
@@ -212,7 +211,6 @@ router.get("/submit", function (req, res, next) {
             name = name.split(")").join("");
             name = name.split(" ").join("_") + "_specialism";
             name = name.split("__").join("_").toLowerCase();
-            //console.log(data['specialism'][i], name);
             cats[name] = "yes";
         }
     }
@@ -235,8 +233,34 @@ router.get("/submit", function (req, res, next) {
 
     // Q7
     var resources = [];
+    var resources_space = "";
+    var resources_equipment = "";
+    var resources_personnel = "";
+    var resources_other = "";
     if (data['resources']) {
-        resources = data['resources'];
+        console.log(data['resources']);
+        let len = data['resources'].length;
+        for (var i = 0; i < len; i++) {
+            console.log( data['resources'][i]);
+            if(data['resources'][i]==="Suitable space"){
+                resources_space="yes";
+            }
+            if(data['resources'][i]==="Equipment"){
+                resources_equipment="yes";
+            }
+            if(data['resources'][i]==="Trained personnel"){
+                resources_personnel="yes";
+            }
+            if(data['resources'][i]==="Other"){
+                resources_other="yes";
+            }
+
+        }
+
+        
+
+        
+
     }
     // freetext
     var resourcesText = [];
@@ -268,17 +292,17 @@ router.get("/submit", function (req, res, next) {
     var time = + new Date();
     // add to json
     //req.session.data.timestamp = time;
-*/
+
     var json = JSON.stringify(req.session.data);
 
-/* 
+ 
     var SQL = `INSERT INTO companies(
         company_name, company_number, contact_name, contact_role, contact_phone, contact_email, 
         ventilator_production, ventilator_parts_human, ventilator_parts_veterinary, ventilator_parts_any, ventilator_parts_details,
         ${deviceFields}
         offer_organisation,
         ${catFields}
-        resources, resource_details,
+        resources_space, resources_equipment, resources_personnel, resources_other, resource_details,
         timestamp
         ) VALUES (
             '${companyName}', '${companyNumber}', '${contact}', '${phone}', '${email}', 
@@ -286,10 +310,10 @@ router.get("/submit", function (req, res, next) {
             ${devicesResults}
             '${offerText}',
             ${catResults}
-            '${resources}', '${resourcesText}',
+            '${resources_space}', '${resources_equipment}', '${resources_personnel}', '${resources_other}', '${resourcesText}',
             '${time}'
         );`;
- */
+ 
         /* 
         ventilator_production isClinical
         ventilator_parts_human isHumanUse
@@ -300,9 +324,9 @@ router.get("/submit", function (req, res, next) {
  
     // check for data
     if (json.length > 2) {
-        var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
+        //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
         console.log(SQL);
-        
+                 
         const client = new Client({
             connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
             ssl: true,
@@ -314,7 +338,7 @@ router.get("/submit", function (req, res, next) {
             client.end();
             if (err) next(err);
         });
-        
+         
     } else {
         console.log('nothing to see');
 

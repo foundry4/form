@@ -303,7 +303,7 @@ router.get("/submit", function (req, res, next) {
         offer_organisation,
         ${catFields}
         resources_space, resources_equipment, resources_personnel, resources_other, resource_details,
-        timestamp
+        created_at
         ) VALUES (
             '${companyName}', '${companyNumber}', '${contact}', '${role}', '${phone}', '${email}', 
             '${isClinical}', '${isHumanUse}', '${isVetUse}', '${isOtherUse}',' ${ventilatorText}',

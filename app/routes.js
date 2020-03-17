@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 // Add your routes here - above the module.exports line
-var categories = [
+var devices = [
     "Air Compressors / Pumps",
     "Bellows",
     "Self-inflating bags",
@@ -24,6 +24,7 @@ var categories = [
     "Heat and moisture exchanging filters (HMEFs)",
     "Air Filter, HEPA Filters"
 ];
+
 var expertise = [
     "Design / specification",
     "Rapid prototyping",
@@ -51,14 +52,14 @@ const { Client } = require('pg');
 // landing page
 router.get("/", function (req, res, next) {
     res.render("index", {
-        categories: categories,
+        devices: devices,
         expertise: expertise,
         resources: resources
       });
 });
 
 router.get("/submit", function (req, res, next) {
-    console.log("submit");
+    
     var data = req.session.data;
     // pullout specific BASIC vars
     var name = "";
@@ -86,7 +87,7 @@ router.get("/submit", function (req, res, next) {
         email = data['email'];
     }
 
-    console.log(name, number ,contact, phone, email);
+    //console.log(name, number ,contact, phone, email);
     // SUPPLY CHAIN
 
     var isClinical = "no";
@@ -111,7 +112,7 @@ router.get("/submit", function (req, res, next) {
     if(data['ventilator-detail']){
         ventilatorText = data['ventilator-detail'];
     }
-    console.log(isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText);
+    //console.log(isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText);
 
     // MEDICAL DEVICES
     var design = [];
@@ -138,7 +139,7 @@ router.get("/submit", function (req, res, next) {
         location.push(ref);
     }
     //console.log(design, manufacture, supply);
-    console.log(location);
+    //console.log(location);
 
     // Q5
     // freetext
@@ -148,24 +149,45 @@ router.get("/submit", function (req, res, next) {
     }
 
     // SKILLS and SPECIALISM
-    var skills = [];
+    var cats = { };
+    // loop thru skillz
     if(data['skills']){
-        skills = data['skills'];
+        let len = data['skills'].length;
+        for ( var i=0; i<len; i++){
+            //convert name to string
+            var name = data['skills'][i].split("/")[0];
+            name = name.split(" ").join("_")+"_skills";
+            name = name.split("__").join("_").toLowerCase();
+           // //console.log(data['skills'][i], name);
+            cats[name] = "yes";
+        }
     }
-    var specialism = [];
+    //var specialism = [];
     if(data['specialism']){
-        specialism = data['specialism'];
+        let len = data['specialism'].length;
+        for ( var i=0; i<len; i++){
+            //convert name to string
+            var name = data['specialism'][i].split("/")[0];
+            name = name.split(" ").join("_")+"_specialism";
+            name = name.split("__").join("_").toLowerCase();
+            //console.log(data['specialism'][i], name);
+            cats[name] = "yes";
+        }
     }
-    // get locations - build an array
-    var specialismLocation = [];
+    // get locations
     for ( var i=1; i<11; i++){
         var ref = 0;
         if(data['specialism-location-'+i]!==""){
+            var name = expertise[i-1].split("/")[0];
+            name = name.split(" ").join("_")+"_location";
+            name = name.split("__").join("_").toLowerCase();
             ref = parseInt(data['specialism-location-'+i]);
+            cats[name] = ref;
         }
-        specialismLocation.push(ref);
+        
     }
-console.log(specialismLocation);
+    //console.log(cats);
+
 
     // Q7
     var resources = [];
@@ -177,7 +199,7 @@ console.log(specialismLocation);
     if(data['resources-detail']){
         resourcesText = data['resources-detail'];
     }
-    console.log(resources, resourcesText);
+    //console.log(resources, resourcesText);
 /*     
     var SQL = `INSERT INTO companies(
         name, number, contact, phone, email, 
@@ -194,10 +216,17 @@ console.log(specialismLocation);
         );`;
  */
 
-
-    var json = JSON.stringify(req.session.data);
+var json = JSON.stringify(req.session.data);
+if (json.length>2){
+    
     var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
     console.log(SQL);
+}else{
+    console.log('nothing to see');
+    
+}
+
+/* 
  
     const client = new Client({
         connectionString: process.env.DATABASE_URL,
@@ -212,7 +241,7 @@ console.log(specialismLocation);
         //console.log(res);
         client.end();
       });
-
+ */
  
     res.render("confirm", {
       });

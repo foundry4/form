@@ -305,7 +305,7 @@ router.get("/submit", function (req, res, next) {
         resources_space, resources_equipment, resources_personnel, resources_other, resource_details,
         timestamp
         ) VALUES (
-            '${companyName}', '${companyNumber}', '${contact}', '${phone}', '${email}', 
+            '${companyName}', '${companyNumber}', '${contact}', '${role}', '${phone}', '${email}', 
             '${isClinical}', '${isHumanUse}', '${isVetUse}', '${isOtherUse}',' ${ventilatorText}',
             ${devicesResults}
             '${offerText}',

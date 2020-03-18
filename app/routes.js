@@ -355,7 +355,7 @@ sanitize = function (string){
         '<': '&lt;',
         '>': '&gt;',
         '"': '&quot;',
-        "'": '&quot;', 
+        "'": '^', 
         "/": '&#x2F;',
     };
     const reg = /[&<>"'/]/ig;

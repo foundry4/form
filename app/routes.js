@@ -376,32 +376,35 @@ console.log("form from " + companyName);
  
     // check for data
     console.log("check json " + json.length);
-    console.log(json);
-
+    
     
     if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
-
+        
         const query = {
             text: sql,
             values: values,
         }
         console.log(query);
-                   
+        
         const client = new Client({
             connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
             ssl: true,
-            });
-            
+        });
+        
         client.connect();
-    
+        console.log("connect");
+        
         client.query(query, (err, res) => {
+            console.log(res);
+            
             client.end();
             if (err) next(err);
         });
-           
+        
     } else {
         console.log('nothing to see');
+        console.log(json);
 
     }
     

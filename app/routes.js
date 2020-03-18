@@ -254,7 +254,7 @@ router.get("/submit", function (req, res, next) {
         "resources_equipment" : resources_equipment, 
         "resources_personnel" : resources_personnel, 
         "resources_other" : resources_other, 
-        "resource_detail" : resourcesText
+        "resource_details" : resourcesText
     }
 
     // Add in fields from med_devices

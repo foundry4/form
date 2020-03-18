@@ -73,6 +73,7 @@ router.get("/submit", function (req, res, next) {
     var role = data['primary-contact-role'] || "";
     var phone = data['phone'] || "";
     var email = data['email'] || "";
+console.log("form from " + companyName);
 
     // SUPPLY CHAIN
     var isClinical = data['is-clinical'] || "no";
@@ -272,7 +273,7 @@ router.get("/submit", function (req, res, next) {
     }
 
     // Quick check
-    console.log("SQL values: " + sql_values)
+    //console.log("SQL values: " + sql_values)
 
     // Build arrays of entries for the SQL query
     var fieldNames = [];
@@ -289,6 +290,9 @@ router.get("/submit", function (req, res, next) {
     var fields = fieldNames.join(", ")
     var positions = valuePositions.join(", ")
     var sql = "INSERT INTO companies(" + fields + ") VALUES (" + positions + ");"
+
+    console.log(sql);
+    
 
     // var catFields = "";
     // var catResults = "";
@@ -368,15 +372,13 @@ router.get("/submit", function (req, res, next) {
     //         '${resourcesText}'
     //     );`;
  
-        /* 
-        ventilator_production isClinical
-        ventilator_parts_human isHumanUse
-        ventilator_parts_veterinary isVetUse
-        ventilator_parts_any isOtherUse
-        ventilator_parts_details ventilatorText
-        */
+ 
  
     // check for data
+    console.log("check json " + json.length);
+    console.log(json);
+
+    
     if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
 

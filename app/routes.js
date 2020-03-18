@@ -272,7 +272,7 @@ router.get("/submit", function (req, res, next) {
     }
 
     // Quick check
-    console.log(sql_values)
+    console.log("SQL values: " + sql_values)
 
     // Build arrays of entries for the SQL query
     var fieldNames = [];
@@ -282,8 +282,8 @@ router.get("/submit", function (req, res, next) {
     for (var i = 0; i < sql_keys.length; i++) {
         key = sql_keys[i]
         fieldNames.push(key)
-        valuePositions.push("$"+i)
-        values.push(values[key])
+        valuePositions.push("$"+(i+1))
+        values.push(sql_values[key])
     }
 
     var fields = fieldNames.join(", ")

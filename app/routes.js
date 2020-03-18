@@ -48,7 +48,6 @@ var resources = [
 const { Client } = require('pg');
 
 
-
 // landing page
 router.get("/", function (req, res, next) {
     res.render("index", {
@@ -83,7 +82,6 @@ router.post("/submit", function (req, res, next) {
     var isOtherUse= data['other-use'] || "no";
     // freetext
     var ventilatorText = data['ventilator-detail'] || "";
-    //console.log(isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText);
 
     // MEDICAL DEVICES
     var med_devices = {};
@@ -294,140 +292,40 @@ router.post("/submit", function (req, res, next) {
 
     console.log(sql);
     
-
-    // var catFields = "";
-    // var catResults = "";
-    // for (item in cats) {
-    //     catFields += item + ", ";
-    // }
-    // for (item in cats) {
-    //     catResults += "'" + cats[item] + "', ";
-    // }
-
-    // // time stamp
-    // var time = + new Date();
-    // // add to json
-    // //req.session.data.timestamp = time;
-
-    // var companyName
-    // '${companyNumber}', 
-    // '${contact}', 
-    // '${role}', 
-    // '${phone}', 
-    // '${email}', 
-    // '${isClinical}', 
-    // '${isHumanUse}', 
-    // '${isVetUse}', 
-    // '${isOtherUse}',
-    // '${ventilatorText}',
-    // ${devicesResults}
-    // '${offerText}',
-    // ${catResults}
-    // '${resources_space}', 
-    // '${resources_equipment}', 
-    // '${resources_personnel}', 
-    // '${resources_other}', 
-    // '${resourcesText}'
- 
-    // var SQL = `INSERT INTO companies(
-    //     info, 
-    //     company_name, 
-    //     company_number, 
-    //     contact_name, 
-    //     contact_role, 
-    //     contact_phone, 
-    //     contact_email, 
-    //     ventilator_production, 
-    //     ventilator_parts_human, 
-    //     ventilator_parts_veterinary, 
-    //     ventilator_parts_any, 
-    //     ventilator_parts_details,
-    //     ${deviceFields}
-    //     offer_organisation,
-    //     ${catFields}
-    //     resources_space, 
-    //     resources_equipment, 
-    //     resources_personnel, 
-    //     resources_other, 
-    //     resource_details
-    //     ) VALUES (
-    //         '${json}',
-    //         '${companyName}', 
-    //         '${companyNumber}', 
-    //         '${contact}', 
-    //         '${role}', 
-    //         '${phone}', 
-    //         '${email}', 
-    //         '${isClinical}', 
-    //         '${isHumanUse}', 
-    //         '${isVetUse}', 
-    //         '${isOtherUse}',
-    //         '${ventilatorText}',
-    //         ${devicesResults}
-    //         '${offerText}',
-    //         ${catResults}
-    //         '${resources_space}', 
-    //         '${resources_equipment}', 
-    //         '${resources_personnel}', 
-    //         '${resources_other}', 
-    //         '${resourcesText}'
-    //     );`;
- 
- 
- 
     // check for data
     console.log("check json " + json.length);
     
-    
-    //if (json.length > 2) {
-        //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
-        
-        const query = {
-            text: sql,
-            values: values,
-        }
-        // query["text"] = "INSERT INTO companies( info ) values ( $1 )"
-        // query["values"] = [json]
-        console.log(query);
-        
-        const client = new Client({
-            connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
-            ssl: true,
-        });
-        
-        client.connect();
-        console.log("connect");
-        
-        client.query(query, (err, res) => {
-            console.log(res);
-            
-            client.end();
-            if (err) next(err);
-        });
-        
-    // } else {
-    //     console.log('nothing to see');
-    //     console.log(json);
+    const query = {
+        text: sql,
+        values: values,
+    }
+    // query["text"] = "INSERT INTO companies( info ) values ( $1 )"
+    // query["values"] = [json]
 
-    // }
+    console.log(query);
+    
+    const client = new Client({
+        connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
+        ssl: true,
+    });
+    
+    client.connect();
+    console.log("connect");
+    
+    client.query(query, (err, res) => {
+        console.log(res);
+        
+        client.end();
+        if (err) next(err);
+    });
     
     res.render("confirm", {
     });
 });
 
-
-// sanitize = function (string){
-//     const map = {
-//         '&': '&amp;',
-//         '<': '&lt;',
-//         '>': '&gt;',
-//         '"': '&quot;',
-//         "'": '&#x27;', 
-//         "/": '&#x2F;',
-//     };
-//     const reg = /[&<>"'/]/ig;
-//     return string.replace(reg, (match)=>(map[match]));
-//   }
+router.get("/submit", function (req, res, next) {
+    res.render("confirm", {});
+});
 
 
 module.exports = router

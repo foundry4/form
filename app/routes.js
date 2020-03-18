@@ -64,7 +64,7 @@ router.get('/error', function(req, res, next) {
 
 router.post("/submit", function (req, res, next) {
 
-    var data = req.session.data;
+    var data = req.body;
     console.log(req.body)
     
     // pullout specific BASIC vars
@@ -88,7 +88,7 @@ console.log("form from " + companyName);
     // MEDICAL DEVICES
     var med_devices = {};
     // loop thru design
-    if (data['design']) {
+    if (data['design'] && data['design'] != "_unchecked") {
         let len = data['design'].length;
         for (var i = 0; i < len; i++) {
             //convert name to string
@@ -102,7 +102,7 @@ console.log("form from " + companyName);
             med_devices[name] = "yes";
         }
     }
-    if (data['manufacture']) {
+    if (data['manufacture'] && data['manufacture'] != "_unchecked") {
         let len = data['manufacture'].length;
         for (var i = 0; i < len; i++) {
             //convert name to string
@@ -116,7 +116,7 @@ console.log("form from " + companyName);
             med_devices[name] = "yes";
         }
     }
-    if (data['supply']) {
+    if (data['supply'] && data['supply'] != "_unchecked") {
         let len = data['supply'].length;
         for (var i = 0; i < len; i++) {
             //convert name to string
@@ -156,7 +156,7 @@ console.log("form from " + companyName);
     // SKILLS and SPECIALISM
     var cats = {};
     // loop thru skillz
-    if (data['skills']) {
+    if (data['skills'] && data['skills'] != "_unchecked") {
         let len = data['skills'].length;
         for (var i = 0; i < len; i++) {
             //convert name to string
@@ -169,7 +169,7 @@ console.log("form from " + companyName);
         }
     }
     //var specialism = [];
-    if (data['specialism']) {
+    if (data['specialism'] && data['specialism'] != "_unchecked") {
         let len = data['specialism'].length;
         for (var i = 0; i < len; i++) {
             //convert name to string
@@ -204,7 +204,7 @@ console.log("form from " + companyName);
     var resources_equipment = "";
     var resources_personnel = "";
     var resources_other = "";
-    if (data['resources']) {
+    if (data['resources'] && data['resources'] != "_unchecked") {
         console.log(data['resources']);
         let len = data['resources'].length;
         for (var i = 0; i < len; i++) {
@@ -386,8 +386,8 @@ console.log("form from " + companyName);
             text: sql,
             values: values,
         }
-        query["text"] = "INSERT INTO companies( info ) values ( $1 )"
-        query["values"] = [json]
+        // query["text"] = "INSERT INTO companies( info ) values ( $1 )"
+        // query["values"] = [json]
         console.log(query);
         
         const client = new Client({

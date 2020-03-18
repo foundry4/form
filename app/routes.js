@@ -67,55 +67,20 @@ router.get("/submit", function (req, res, next) {
     var data = req.session.data;
     
     // pullout specific BASIC vars
-    var companyName = "";
-    if (data['organisation-name']) {
-        companyName = sanitize(data['organisation-name']);
-    }
-    var companyNumber = "";
-    if (data['company-number']) {
-        companyNumber = sanitize( data['company-number']);
-    }
-    var contact = "";
-    if (data['primary-contact']) {
-        contact = sanitize( data['primary-contact']);
-    }
-    var role = "";
-    if (data['primary-contact-role']) {
-        role = sanitize( data['primary-contact-role']);
-    }
-    var phone = "";
-    if (data['phone']) {
-        phone = sanitize( data['phone']);
-    }
-    var email = "";
-    if (data['email']) {
-        email = sanitize( data['email']);
-    }
+    var companyName = data['organisation-name'] || "";
+    var companyNumber = data['company-number'] || "";
+    var contact = data['primary-contact'] || "";
+    var role = data['primary-contact-role'] || "";
+    var phone = data['phone'] || "";
+    var email = data['email'] || "";
 
     // SUPPLY CHAIN
-    var isClinical = "no";
-    if (data['is-clinical']) {
-        isClinical = data['is-clinical'];
-    }
-    var isHumanUse = "no";
-    if (data['human-use']) {
-        isHumanUse = data['human-use'];
-    }
-    var isVetUse = "no";
-    if (data['vet-use']) {
-        isVetUse = data['vet-use'];
-    }
-    var isOtherUse = "no";
-    if (data['other-use']) {
-        isOtherUse = data['other-use'];
-    }
-
+    var isClinical = data['is-clinical'] || "no";
+    var isHumanUse= data['human-use'] || "no";
+    var isVetUse= data['vet-use'] || "no";
+    var isOtherUse= data['other-use'] || "no";
     // freetext
-    var ventilatorText = "";
-    if (data['ventilator-detail']) {
-        ventilatorText = sanitize( data['ventilator-detail']);
-        ventilatorText = ventilatorText.substring(0, 999);
-    }
+    var ventilatorText = data['ventilator-detail'] || "";
     //console.log(isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText);
 
     // MEDICAL DEVICES
@@ -184,11 +149,7 @@ router.get("/submit", function (req, res, next) {
 
     // Q5
     // freetext
-    var offerText = [];
-    if (data['offer']) {
-        offerText = sanitize( data['offer'] );
-        offerText = offerText.substring(0, 999);
-    }
+    var offerText = data['offer'] || "";
 
     // SKILLS and SPECIALISM
     var cats = {};
@@ -260,18 +221,9 @@ router.get("/submit", function (req, res, next) {
             }
 
         }
-
-        
-
-        
-
     }
     // freetext
-    var resourcesText = [];
-    if (data['resources-detail']) {
-        resourcesText = sanitize( data['resources-detail'] );
-        resourcesText = resourcesText.substring(0, 999);
-    }
+    var resourcesText = data['resources-detail'] || "";
     //console.log(resources, resourcesText);
 
     var deviceFields = "";
@@ -283,38 +235,138 @@ router.get("/submit", function (req, res, next) {
         devicesResults += "'" + med_devices[item] + "', ";
     }
 
-    var catFields = "";
-    var catResults = "";
-    for (item in cats) {
-        catFields += item + ", ";
-    }
-    for (item in cats) {
-        catResults += "'" + cats[item] + "', ";
-    }
-
-    // time stamp
-    var time = + new Date();
-    // add to json
-    //req.session.data.timestamp = time;
-
     var json = JSON.stringify(req.session.data);
-    json = json.split("'").join("&#x27;");
+    var sql_values = {
+        "info" : json, 
+        "company_name" : companyName, 
+        "company_number" : companyNumber, 
+        "contact_name" : contact, 
+        "contact_role" : role, 
+        "contact_phone" : phone, 
+        "contact_email" : email, 
+        "ventilator_production" : isClinical, 
+        "ventilator_parts_human" : isHumanUse, 
+        "ventilator_parts_veterinary" : isVetUse, 
+        "ventilator_parts_any" : isOtherUse, 
+        "ventilator_parts_details" : ventilatorText,
+        "offer_organisation" : offerText,
+        "resources_space" : resources_space, 
+        "resources_equipment" : resources_equipment, 
+        "resources_personnel" : resources_personnel, 
+        "resources_other" : resources_other, 
+        "resource_detail" : resourcesText
+    }
+
+    // Add in fields from med_devices
+    var med_keys = Object.keys(med_devices)
+    for (var i = 0; i < med_keys.length; i++) {
+        key = med_keys[i]
+        sql_values[key] = med_devices[key]
+    }
+
+    // Add in fields from cats
+    var cat_keys = Object.keys(cats)
+    for (var i = 0; i < cat_keys.length; i++) {
+        key = cat_keys[i]
+        sql_values[key] = cats[key]
+    }
+
+    // Quick check
+    console.log(sql_values)
+
+    // Build arrays of entries for the SQL query
+    var fieldNames = [];
+    var valuePositions = [];
+    var values = [];
+    var sql_keys = Object.keys(sql_values)
+    for (var i = 0; i < sql_keys.length; i++) {
+        key = sql_keys[i]
+        fieldNames.push(key)
+        valuePositions.push("$"+i)
+        values.push(values[key])
+    }
+
+    var fields = fieldNames.join(", ")
+    var positions = valuePositions.join(", ")
+    var sql = "INSERT INTO companies(" + fields + ") VALUES (" + positions + ");"
+
+    // var catFields = "";
+    // var catResults = "";
+    // for (item in cats) {
+    //     catFields += item + ", ";
+    // }
+    // for (item in cats) {
+    //     catResults += "'" + cats[item] + "', ";
+    // }
+
+    // // time stamp
+    // var time = + new Date();
+    // // add to json
+    // //req.session.data.timestamp = time;
+
+    // var companyName
+    // '${companyNumber}', 
+    // '${contact}', 
+    // '${role}', 
+    // '${phone}', 
+    // '${email}', 
+    // '${isClinical}', 
+    // '${isHumanUse}', 
+    // '${isVetUse}', 
+    // '${isOtherUse}',
+    // '${ventilatorText}',
+    // ${devicesResults}
+    // '${offerText}',
+    // ${catResults}
+    // '${resources_space}', 
+    // '${resources_equipment}', 
+    // '${resources_personnel}', 
+    // '${resources_other}', 
+    // '${resourcesText}'
  
-    var SQL = `INSERT INTO companies(
-        info, company_name, company_number, contact_name, contact_role, contact_phone, contact_email, 
-        ventilator_production, ventilator_parts_human, ventilator_parts_veterinary, ventilator_parts_any, ventilator_parts_details,
-        ${deviceFields}
-        offer_organisation,
-        ${catFields}
-        resources_space, resources_equipment, resources_personnel, resources_other, resource_details
-        ) VALUES (
-            '${json}','${companyName}', '${companyNumber}', '${contact}', '${role}', '${phone}', '${email}', 
-            '${isClinical}', '${isHumanUse}', '${isVetUse}', '${isOtherUse}',' ${ventilatorText}',
-            ${devicesResults}
-            '${offerText}',
-            ${catResults}
-            '${resources_space}', '${resources_equipment}', '${resources_personnel}', '${resources_other}', '${resourcesText}'
-        );`;
+    // var SQL = `INSERT INTO companies(
+    //     info, 
+    //     company_name, 
+    //     company_number, 
+    //     contact_name, 
+    //     contact_role, 
+    //     contact_phone, 
+    //     contact_email, 
+    //     ventilator_production, 
+    //     ventilator_parts_human, 
+    //     ventilator_parts_veterinary, 
+    //     ventilator_parts_any, 
+    //     ventilator_parts_details,
+    //     ${deviceFields}
+    //     offer_organisation,
+    //     ${catFields}
+    //     resources_space, 
+    //     resources_equipment, 
+    //     resources_personnel, 
+    //     resources_other, 
+    //     resource_details
+    //     ) VALUES (
+    //         '${json}',
+    //         '${companyName}', 
+    //         '${companyNumber}', 
+    //         '${contact}', 
+    //         '${role}', 
+    //         '${phone}', 
+    //         '${email}', 
+    //         '${isClinical}', 
+    //         '${isHumanUse}', 
+    //         '${isVetUse}', 
+    //         '${isOtherUse}',
+    //         '${ventilatorText}',
+    //         ${devicesResults}
+    //         '${offerText}',
+    //         ${catResults}
+    //         '${resources_space}', 
+    //         '${resources_equipment}', 
+    //         '${resources_personnel}', 
+    //         '${resources_other}', 
+    //         '${resourcesText}'
+    //     );`;
  
         /* 
         ventilator_production isClinical
@@ -327,7 +379,12 @@ router.get("/submit", function (req, res, next) {
     // check for data
     if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
-        console.log(SQL);
+
+        const query = {
+            text: sql,
+            values: values,
+        }
+        console.log(query);
                    
         const client = new Client({
             connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
@@ -336,7 +393,7 @@ router.get("/submit", function (req, res, next) {
             
         client.connect();
     
-        client.query(SQL, (err, res) => {
+        client.query(query, (err, res) => {
             client.end();
             if (err) next(err);
         });
@@ -346,25 +403,23 @@ router.get("/submit", function (req, res, next) {
 
     }
     
-
-
     res.render("confirm", {
     });
 });
 
 
-sanitize = function (string){
-    const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#x27;', 
-        "/": '&#x2F;',
-    };
-    const reg = /[&<>"'/]/ig;
-    return string.replace(reg, (match)=>(map[match]));
-  }
+// sanitize = function (string){
+//     const map = {
+//         '&': '&amp;',
+//         '<': '&lt;',
+//         '>': '&gt;',
+//         '"': '&quot;',
+//         "'": '&#x27;', 
+//         "/": '&#x2F;',
+//     };
+//     const reg = /[&<>"'/]/ig;
+//     return string.replace(reg, (match)=>(map[match]));
+//   }
 
 
 module.exports = router

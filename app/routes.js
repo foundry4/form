@@ -74,7 +74,7 @@ router.post("/submit", function (req, res, next) {
     var role = data['primary-contact-role'] || "";
     var phone = data['phone'] || "";
     var email = data['email'] || "";
-console.log("form from " + companyName);
+    console.log("form from " + companyName);
 
     // SUPPLY CHAIN
     var isClinical = data['is-clinical'] || "no";

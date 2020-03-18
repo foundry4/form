@@ -65,27 +65,27 @@ router.get("/submit", function (req, res, next) {
     // pullout specific BASIC vars
     var companyName = "";
     if (data['organisation-name']) {
-        companyName = data['organisation-name'];
+        companyName = sanitize(data['organisation-name']);
     }
     var companyNumber = "";
     if (data['company-number']) {
-        companyNumber = data['company-number'];
+        companyNumber = sanitize( data['company-number']);
     }
     var contact = "";
     if (data['primary-contact']) {
-        contact = data['primary-contact'];
+        contact = sanitize( data['primary-contact']);
     }
     var role = "";
     if (data['primary-contact-role']) {
-        role = data['primary-contact-role'];
+        role = sanitize( data['primary-contact-role']);
     }
     var phone = "";
     if (data['phone']) {
-        phone = data['phone'];
+        phone = sanitize( data['phone']);
     }
     var email = "";
     if (data['email']) {
-        email = data['email'];
+        email = sanitize( data['email']);
     }
 
     // SUPPLY CHAIN
@@ -109,7 +109,7 @@ router.get("/submit", function (req, res, next) {
     // freetext
     var ventilatorText = "";
     if (data['ventilator-detail']) {
-        ventilatorText = data['ventilator-detail'];
+        ventilatorText = sanitize( data['ventilator-detail']);
         ventilatorText = ventilatorText.substring(0, 999);
     }
     //console.log(isClinical, isHumanUse, isVetUse, isOtherUse, ventilatorText);
@@ -182,7 +182,7 @@ router.get("/submit", function (req, res, next) {
     // freetext
     var offerText = [];
     if (data['offer']) {
-        offerText = data['offer'];
+        offerText = sanitize( data['offer'] );
         offerText = offerText.substring(0, 999);
     }
 
@@ -265,7 +265,7 @@ router.get("/submit", function (req, res, next) {
     // freetext
     var resourcesText = [];
     if (data['resources-detail']) {
-        resourcesText = data['resources-detail'];
+        resourcesText = sanitize( data['resources-detail'] );
         resourcesText = resourcesText.substring(0, 999);
     }
     //console.log(resources, resourcesText);
@@ -324,7 +324,7 @@ router.get("/submit", function (req, res, next) {
     if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
         console.log(SQL);
-                 
+                  
         const client = new Client({
             connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
             ssl: true,
@@ -336,7 +336,7 @@ router.get("/submit", function (req, res, next) {
             client.end();
             if (err) next(err);
         });
-         
+          
     } else {
         console.log('nothing to see');
 
@@ -348,6 +348,19 @@ router.get("/submit", function (req, res, next) {
     });
 });
 
+
+sanitize = function (string){
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        "/": '&#x2F;',
+    };
+    const reg = /[&<>"'/]/ig;
+    return string.replace(reg, (match)=>(map[match]));
+  }
 
 
 module.exports = router

@@ -355,7 +355,7 @@ sanitize = function (string){
         '<': '&lt;',
         '>': '&gt;',
         '"': '&quot;',
-        "'": '&#x27;&#x27;', // escape for SQL''
+        "'": 'char(39)', 
         "/": '&#x2F;',
     };
     const reg = /[&<>"'/]/ig;

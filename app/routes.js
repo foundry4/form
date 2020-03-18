@@ -324,7 +324,7 @@ router.get("/submit", function (req, res, next) {
     if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
         console.log(SQL);
-     /*              
+                   
         const client = new Client({
             connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
             ssl: true,
@@ -336,7 +336,7 @@ router.get("/submit", function (req, res, next) {
             client.end();
             if (err) next(err);
         });
-           */
+           
     } else {
         console.log('nothing to see');
 

@@ -294,7 +294,7 @@ router.get("/submit", function (req, res, next) {
     //req.session.data.timestamp = time;
 
     var json = JSON.stringify(req.session.data);
-    json = sanitize( json);
+    json = json.split("'").join("&#x27;");
  
     var SQL = `INSERT INTO companies(
         info, company_name, company_number, contact_name, contact_role, contact_phone, contact_email, 
@@ -324,7 +324,7 @@ router.get("/submit", function (req, res, next) {
     if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
         console.log(SQL);
-                  
+     /*              
         const client = new Client({
             connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
             ssl: true,
@@ -336,7 +336,7 @@ router.get("/submit", function (req, res, next) {
             client.end();
             if (err) next(err);
         });
-          
+           */
     } else {
         console.log('nothing to see');
 

@@ -378,13 +378,15 @@ console.log("form from " + companyName);
     console.log("check json " + json.length);
     
     
-    if (json.length > 2) {
+    //if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
         
         const query = {
             text: sql,
             values: values,
         }
+        query["text"] = "INSERT INTO companies( info ) values ( $1 )"
+        query["values"] = [json]
         console.log(query);
         
         const client = new Client({
@@ -402,11 +404,11 @@ console.log("form from " + companyName);
             if (err) next(err);
         });
         
-    } else {
-        console.log('nothing to see');
-        console.log(json);
+    // } else {
+    //     console.log('nothing to see');
+    //     console.log(json);
 
-    }
+    // }
     
     res.render("confirm", {
     });

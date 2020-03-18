@@ -282,7 +282,7 @@ router.get("/submit", function (req, res, next) {
     for (var i = 0; i < sql_keys.length; i++) {
         key = sql_keys[i]
         fieldNames.push(key)
-        valuePositions.push("$"+i)
+        valuePositions.push("$"+(i+1))
         values.push(values[key])
     }
 

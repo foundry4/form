@@ -58,6 +58,10 @@ router.get("/", function (req, res, next) {
     });
 });
 
+router.get('/error', function(req, res, next) {
+    res.render('error', { content : {error: {message: "Internal server error"}}});
+});
+
 router.get("/submit", function (req, res, next) {
 
     var data = req.session.data;

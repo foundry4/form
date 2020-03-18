@@ -65,6 +65,7 @@ router.get('/error', function(req, res, next) {
 router.get("/submit", function (req, res, next) {
 
     var data = req.session.data;
+    console.log(req.body)
     
     // pullout specific BASIC vars
     var companyName = data['organisation-name'] || "";

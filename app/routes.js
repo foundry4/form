@@ -294,7 +294,7 @@ router.get("/submit", function (req, res, next) {
     //req.session.data.timestamp = time;
 
     var json = JSON.stringify(req.session.data);
-
+    json = sanitize( json);
  
     var SQL = `INSERT INTO companies(
         info, company_name, company_number, contact_name, contact_role, contact_phone, contact_email, 
@@ -355,7 +355,7 @@ sanitize = function (string){
         '<': '&lt;',
         '>': '&gt;',
         '"': '&quot;',
-        "'": '^', 
+        "'": '&#x27;', 
         "/": '&#x2F;',
     };
     const reg = /[&<>"'/]/ig;

@@ -40,77 +40,77 @@ router.get("/submit", function (req, res, next) {
     // //req.session.data.timestamp = time;
 
     // var companyName
-    // '${companyNumber}', 
-    // '${contact}', 
-    // '${role}', 
-    // '${phone}', 
-    // '${email}', 
-    // '${isClinical}', 
-    // '${isHumanUse}', 
-    // '${isVetUse}', 
+    // '${companyNumber}',
+    // '${contact}',
+    // '${role}',
+    // '${phone}',
+    // '${email}',
+    // '${isClinical}',
+    // '${isHumanUse}',
+    // '${isVetUse}',
     // '${isOtherUse}',
     // '${ventilatorText}',
     // ${devicesResults}
     // '${offerText}',
     // ${catResults}
-    // '${resources_space}', 
-    // '${resources_equipment}', 
-    // '${resources_personnel}', 
-    // '${resources_other}', 
+    // '${resources_space}',
+    // '${resources_equipment}',
+    // '${resources_personnel}',
+    // '${resources_other}',
     // '${resourcesText}'
- 
+
     // var SQL = `INSERT INTO companies(
-    //     info, 
-    //     company_name, 
-    //     company_number, 
-    //     contact_name, 
-    //     contact_role, 
-    //     contact_phone, 
-    //     contact_email, 
-    //     ventilator_production, 
-    //     ventilator_parts_human, 
-    //     ventilator_parts_veterinary, 
-    //     ventilator_parts_any, 
+    //     info,
+    //     company_name,
+    //     company_number,
+    //     contact_name,
+    //     contact_role,
+    //     contact_phone,
+    //     contact_email,
+    //     ventilator_production,
+    //     ventilator_parts_human,
+    //     ventilator_parts_veterinary,
+    //     ventilator_parts_any,
     //     ventilator_parts_details,
     //     ${deviceFields}
     //     offer_organisation,
     //     ${catFields}
-    //     resources_space, 
-    //     resources_equipment, 
-    //     resources_personnel, 
-    //     resources_other, 
+    //     resources_space,
+    //     resources_equipment,
+    //     resources_personnel,
+    //     resources_other,
     //     resource_details
     //     ) VALUES (
     //         '${json}',
-    //         '${companyName}', 
-    //         '${companyNumber}', 
-    //         '${contact}', 
-    //         '${role}', 
-    //         '${phone}', 
-    //         '${email}', 
-    //         '${isClinical}', 
-    //         '${isHumanUse}', 
-    //         '${isVetUse}', 
+    //         '${companyName}',
+    //         '${companyNumber}',
+    //         '${contact}',
+    //         '${role}',
+    //         '${phone}',
+    //         '${email}',
+    //         '${isClinical}',
+    //         '${isHumanUse}',
+    //         '${isVetUse}',
     //         '${isOtherUse}',
     //         '${ventilatorText}',
     //         ${devicesResults}
     //         '${offerText}',
     //         ${catResults}
-    //         '${resources_space}', 
-    //         '${resources_equipment}', 
-    //         '${resources_personnel}', 
-    //         '${resources_other}', 
+    //         '${resources_space}',
+    //         '${resources_equipment}',
+    //         '${resources_personnel}',
+    //         '${resources_other}',
     //         '${resourcesText}'
     //     );`;
- 
-        /* 
-        ventilator_production isClinical
-        ventilator_parts_human isHumanUse
-        ventilator_parts_veterinary isVetUse
-        ventilator_parts_any isOtherUse
-        ventilator_parts_details ventilatorText
-        */
- 
+
+    /*
+    ventilator_production isClinical
+    ventilator_parts_human isHumanUse
+    ventilator_parts_veterinary isVetUse
+    ventilator_parts_any isOtherUse
+    ventilator_parts_details ventilatorText
+    */
+
     // check for data
     if (json.length > 2) {
         //var SQL = "INSERT INTO companies(info) VALUES ('"+json+"');";
@@ -120,24 +120,24 @@ router.get("/submit", function (req, res, next) {
             values: values,
         }
         console.log(query);
-                   
+
         const client = new Client({
             connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
             ssl: true,
-            });
+        });
 
         client.connect();
-    
+
         client.query(query, (err, res) => {
             client.end();
             if (err) next(err);
         });
-           
+
     } else {
         console.log('nothing to see');
 
     }
-    
+
     res.render("confirm", {
     });
 });

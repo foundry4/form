@@ -21,7 +21,8 @@ router.get('/error', function(req, res, next) {
 
 router.post("/submit", function (req, res, next) {
     try{
-        var data = req.session.data;
+        var data = req.body;
+        console.log(req.body)
         const { fields, positions, json, values } = createData(data);
         var sql = "INSERT INTO companies(" + fields + ") VALUES (" + positions + ");"
 
@@ -49,7 +50,7 @@ router.post("/submit", function (req, res, next) {
 
            client.connect();
        }
-       catch(errr){
+       catch(err){
             throw new err('Failed to connect to database')
         }
         console.log("connect");

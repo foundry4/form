@@ -3,7 +3,7 @@
 
 CREATE TABLE companies (
   id serial PRIMARY KEY,
-  info JSON,
+  info JSON
 }
 
 ALTER TABLE companies

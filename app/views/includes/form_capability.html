@@ -21,7 +21,7 @@
     </div>
 
     <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset" aria-describedby="experience-hint">
+      <fieldset class="govuk-fieldset" aria-describedby="expertise-hint">
 
         <span id="expertise-hint" class="govuk-hint">
           6. Please indicate in which of the following activities your organisation has relevant skills, which is your
@@ -45,7 +45,7 @@
               <td class="govuk-table__cell">
                 <div class="govuk-checkboxes__item">
                   <input class="govuk-checkboxes__input" id="skills-{{ loop.index }}" name="skills" type="checkbox"
-                    value="{{ item }}">
+                    value="{{ item }}" aria-label="skills-{{ loop.index }}">
                   <label class="govuk-label govuk-checkboxes__label" for="skills-{{ loop.index }}">
                     &nbsp;
                   </label>
@@ -55,14 +55,14 @@
               <td class="govuk-table__cell">
                 <div class="govuk-checkboxes__item">
                   <input class="govuk-checkboxes__input" id="specialism-{{ loop.index }}" name="specialism"
-                    type="checkbox" value="{{ item }}">
+                    type="checkbox" value="{{ item }}" aria-label="specialism-{{ loop.index }}">
                   <label class="govuk-label govuk-checkboxes__label" for="specialism-{{ loop.index }}">
                     &nbsp;
                   </label>
                 </div>
               </td>
               <td class="govuk-table__cell">
-                <select class="govuk-select" name="specialism-location-{{ loop.index }}">
+                <select class="govuk-select" name="specialism-location-{{ loop.index }}" aria-label="specialism-location-{{ loop.index }}">
                   <option value="" selected></option>
                   <option value="1">in the UK</option>
                   <option value="2">in Europe</option>
@@ -88,7 +88,7 @@
           {% for item in resources %}
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="resources-{{ loop.index }}" name="resources" type="checkbox"
-              value="{{ item }}">
+              value="{{ item }}" aria-label="resources-{{ loop.index }}">
             <label class="govuk-label govuk-checkboxes__label" for="resources-{{ loop.index }}">
               {{ item }}
             </label>

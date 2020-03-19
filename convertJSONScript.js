@@ -3,8 +3,6 @@ const createData = require('./lib/createData');
 
 const parse = async (id,parsed,client,company_name)=> {
   try {
-    // let SQL = '';
-
     if(parsed.length>2) {
       let json = JSON.parse(parsed);
       const { fields, sql_values, values } = createData(json);

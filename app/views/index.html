@@ -21,7 +21,7 @@ Readiness to supply ventilators and ventilator components
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="">
+  <div class="govuk-grid-column-two-thirds">
 
     <h1 class="govuk-heading-xl">
       Readiness to supply ventilators and ventilator components
@@ -31,7 +31,7 @@ Readiness to supply ventilators and ventilator components
       supply of ventilators and ventilator components across the United Kingdom as part of the Government's response to
       COVID-19. These questions aim to identify the suitability and readiness of organisations to be involved in the
       initiative.
-      
+
     </p>
 
     <p>There are three main sections</p>
@@ -46,7 +46,7 @@ Readiness to supply ventilators and ventilator components
     Screen reader support enabled.
   </p> -->
   </div>
-  <div>
+  <div class="govuk-grid-column-full">
     <form id="" action="submit" method="post" class="form">
 
 
@@ -74,14 +74,17 @@ Readiness to supply ventilators and ventilator components
 
         <br />
         <br />
-
-        <p>By submitting this form, you agree to the information you share about your organisation being used by 
-          BEIS and any other Government departments and their delivery partners in relation to this initiative, 
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+        <p>By submitting this form, you agree to the information you share about your organisation being used by
+          BEIS and any other Government departments and their delivery partners in relation to this initiative,
           and to our <a href="privacy">privacy notice</a>.</p>
         <br />
         {{ govukButton({
             text: "Submit"
           }) }}
+          </div>
+        </div>
 
 
       </div>

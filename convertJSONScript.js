@@ -3,16 +3,21 @@ const createData = require('./lib/createData');
 
 const parse = async (id,parsed,client)=> {
   try {
-    let SQL = '';
-    const { sql_values } = createData(JSON.parse(parsed));
-    Object.keys(sql_values).map((key)=> {
-      if (key === 'info'|| key.includes('unchecked') || key.includes('power_supplies _')|| key.includes('m_specialism')) {
+    // let SQL = '';
+    const { fields,sql_values,values} = createData(JSON.parse(parsed));
+    const fields_array = fields.split(', ');
+    await Promise.all(Object.keys(sql_values).map(async (key, index)=> {
+      if ( key.includes('unchecked') || key.includes('power_supplies _')|| key.includes('m_specialism')) {
       }
       else {
-        SQL = SQL + `UPDATE companies SET ${key}='${fix_quote(sql_values[key])}' WHERE id=${id} ;`;
+        const SQL = `UPDATE companies SET ${fields_array[index]}=$1 WHERE id=${id};`;
+        const query = {
+          text: SQL,
+          values: values.slice(index,index+1),
+        }
+        await client.query(query);
       }
-    });
-    await client.query(SQL);
+    }));
   }
   catch(err){
     console.log('Error parsing JSON into columns;', err.toString());
@@ -22,7 +27,7 @@ const getRows = async ()=>{
   try {
     const client = new Client({
       connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
-      ssl: true,
+      ssl: false,
     });
 
     client.connect();
@@ -36,14 +41,6 @@ const getRows = async ()=>{
   }
   catch(err){
     console.log('Error retrieving rows from database;', err.toString());
-  }
-}
-const fix_quote = (string) => {
-  if (typeof string === 'string'){
-    return string.replace("'" , "''");
-  }
-  else {
-    return string;
   }
 }
 getRows();

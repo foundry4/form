@@ -113,7 +113,7 @@
                     <td class="govuk-table__cell">
                       <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="design-{{ loop.index }}"
-                          name="design" type="checkbox" value="{{ item }}">
+                          name="design" type="checkbox" value="{{ item }}" aria-label="design-{{ loop.index }}">
                       <label class="govuk-label govuk-checkboxes__label"
                           for="design-{{ loop.index }}">
                           &nbsp;
@@ -123,7 +123,7 @@
                     <td class="govuk-table__cell">
                       <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="manufacture-{{ loop.index }}"
-                          name="manufacture" type="checkbox" value="{{ item }}">
+                          name="manufacture" type="checkbox" value="{{ item }}" aria-label="manufacture-{{ loop.index }}">
                       <label class="govuk-label govuk-checkboxes__label"
                           for="manufacture-{{ loop.index }}">
                           &nbsp;
@@ -133,7 +133,7 @@
                     <td class="govuk-table__cell">
                       <div class="govuk-checkboxes__item">
                       <input class="govuk-checkboxes__input" id="supply-{{ loop.index }}"
-                          name="supply" type="checkbox" value="{{ item }}">
+                          name="supply" type="checkbox" value="{{ item }}" aria-label="supply-{{ loop.index }}">
                       <label class="govuk-label govuk-checkboxes__label"
                           for="supply-{{ loop.index }}">
                           &nbsp;
@@ -141,7 +141,7 @@
                     </div>
                   </td>
                     <td class="govuk-table__cell">
-                      <select class="govuk-select" name="location-{{ loop.index }}">
+                      <select class="govuk-select" name="location-{{ loop.index }}" aria-label="location-{{ loop.index }}">
                         <option value="" selected></option>
                         <option value="1">in the UK</option>
                         <option value="2">in Europe</option>

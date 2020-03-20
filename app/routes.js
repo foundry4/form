@@ -43,27 +43,26 @@ router.post("/submit", function (req, res, next) {
         console.log(query);
         try {
 
-        const client = new Client({
-            connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
-            ssl: true,
-        });
-
-           client.connect();
-       }
-       catch(err){
-            throw new err('Failed to connect to database')
+            const client = new Client({
+                connectionString: process.env.HEROKU_POSTGRESQL_RED_URL || process.env.DATABASE_URL,
+                ssl: true,
+            });
+            
+            console.log("connect");
+            client.connect();
+            
+            client.query(query, (err, res) => {
+                console.log(res);
+                
+                client.end();
+                if (err) next(err);
+            });
+            
+            res.render("confirm", {  });
         }
-        console.log("connect");
-
-        client.query(query, (err, res) => {
-            console.log(res);
-
-            client.end();
-            if (err) next(err);
-        });
-
-        res.render("confirm", {
-        });
+        catch(err){
+             throw new err('Failed to connect to database')
+         }
     }
     catch(err){
         res.render('error', { content : {error: {message: "Internal server error"}}});
